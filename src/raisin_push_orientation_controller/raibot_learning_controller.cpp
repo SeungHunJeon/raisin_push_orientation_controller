@@ -122,7 +122,7 @@ bool raibotLearningController::create(raisim::World *world) {
       high_obsMean_(i) = std::stof(in_line);
     }
   }
-  RSINFO(high_obsMean_)
+//  RSINFO(high_obsMean_)
   if (high_obsVariance_file.is_open()) {
     for (int i = 0; i < high_obsVariance_.size(); ++i) {
       std::getline(high_obsVariance_file, in_line);
@@ -207,8 +207,8 @@ Eigen::VectorXf raibotLearningController::high_obsScalingAndGetAction() {
 
   for (int i = 0; i < high_obs_.size(); ++i) {
     high_obs_(i) = (high_obs_(i) - high_obsMean_(i)) / std::sqrt(high_obsVariance_(i) + 1e-8);
-//    if (high_obs_(i) > 10) { high_obs_(i) = 10.0; }
-//    else if (high_obs_(i) < -10) { high_obs_(i) = -10.0; }
+    if (high_obs_(i) > 10) { high_obs_(i) = 10.0; }
+    else if (high_obs_(i) < -10) { high_obs_(i) = -10.0; }
   }
 
 //  RSINFO(high_obs_)
@@ -221,7 +221,7 @@ Eigen::VectorXf raibotLearningController::high_obsScalingAndGetAction() {
 //  }
 
 //  RSINFO(high_obs_)
-  Eigen::Matrix<float, 840, 1> high_obs_in;
+  Eigen::Matrix<float, 720, 1> high_obs_in;
   Eigen::Matrix<float, 96, 1> high_latent_in;
   high_obs_in << high_obs_;
   Eigen::VectorXf high_latent = encoder_.forward(high_obs_in);

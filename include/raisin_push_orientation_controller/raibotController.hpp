@@ -83,7 +83,7 @@ class raibotController {
     estDim_ = 8;
     actionDim_ = nJoints_;
     high_proDim_ = 15;
-    high_extDim_ = 24;
+    high_extDim_ = 18;
     high_actionDim_ = 3;
     high_historyNum_ = 19;
     high_blockDim_ = high_proDim_ + high_extDim_ + high_actionDim_;
@@ -290,7 +290,7 @@ class raibotController {
     Eigen::Vector3d target_x_axis = Target_rot.e().col(0);
     Eigen::Vector3d base_x_axis = rot_.e().col(0);
     Eigen::Vector3d obj_x_axis;
-//    RSINFO(high_ext_obDouble_)
+
     if(useVicon_)
     {
       obj_x_axis = Obj_vicon_->getOrientation().e().col(0);
@@ -309,10 +309,10 @@ class raibotController {
     high_ext_obDouble_.segment(12,2) << robot_to_obj_heading_cos, robot_to_obj_heading_sin;
     high_ext_obDouble_.segment(14,2) << robot_to_target_heading_cos, robot_to_target_heading_sin;
     high_ext_obDouble_.segment(16,2) << obj_to_target_heading_cos, obj_to_target_heading_sin;
-    high_ext_obDouble_.segment(18,3) << classify_vector_; /// Only for Box
-    high_ext_obDouble_.segment(21,3) << obj_geometry.e(); /// Only for Box
+//    high_ext_obDouble_.segment(18,3) << classify_vector_; /// Only for Box
+//    high_ext_obDouble_.segment(21,3) << obj_geometry.e(); /// Only for Box
     // update History
-
+//    RSINFO(high_ext_obDouble_)
     if(obj_to_target.head(2).norm() < 0.05 && obj_to_target_heading_cos > 0.985){
       is_success = true;
     }
